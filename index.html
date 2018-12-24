@@ -1,12 +1,255 @@
 <html>
-    This is Cherry AK <p>
     <head>
         <title> Cherry AK </title>
+        <script type="text/javascript">
+
+            var canvas = document.createElement("canvas");
+            cx = canvas.getContext("2d");
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight + 230;
+
+            w = canvas.width;
+            h = canvas.height;
+
+            cx.strokeStyle = 'black';
+            cx.fillStyle = '#f7cc7b';
+
+            function makeCherry(x, y, r) {
+                cx.beginPath();
+                cx.arc(x, y, r, 0, Math.PI * 2);
+                cx.fill();
+                cx.stroke();
+            }
+
+            var x0 = 340;
+            var width = 800;
+            var y0 = 50;
+            var height = 1030;
+            divy = height / 20;
+            var divx = width / 10;
+            
+            cx.beginPath();
+            cx.rect(x0, y0, width, height);
+            cx.stroke();
+            cx.globalAlpha = .4;
+            
+            for (var i = x0 + divx; i < width + x0; i += divx) {
+                cx.beginPath();
+                cx.moveTo(i, y0);
+                cx.lineTo(i, height + y0);
+                cx.stroke();
+            }
+            
+            for (var i = y0 + divy; i < height + y0; i += divy) {
+                cx.beginPath();
+                cx.moveTo(x0, i);
+                cx.lineTo(x0 + width, i);
+                cx.stroke();
+            }
+
+            cx.globalAlpha = 1;
+
+            // fill in space between face and ear
+            function drawExtraSpace() {
+                cx.fillStyle = '#f7cc7b';
+                cx.beginPath();
+                cx.moveTo(x0 + 5.1 * divx, y0 + 4.3 * divy);
+                cx.lineTo(x0 + 4 * divx, y0 + 4 * divy);
+                cx.lineTo(x0 + 4.9 * divx, y0 + 5.1 * divy);
+                cx.lineTo(x0 + 5.1 * divx, y0 + 4.3 * divy);
+                cx.fill();
+                cx.closePath();
+            }
+
+            // face outline
+            function drawFaceOutline() {
+                cx.fillStyle = '#f7cc7b';
+                cx.beginPath();
+                cx.moveTo(x0 + 2.8 * divx, y0 + 2.5 * divy);
+                cx.quadraticCurveTo(x0 + 2.57 * divx, y0 + 3 * divy, x0 + 2.6 * divx, y0 + 3.5 * divy);
+                cx.quadraticCurveTo(x0 + 2.62 * divx, y0 + 3.98 * divy, x0 + 2.6 * divx, y0 + 4.5 * divy);
+                cx.quadraticCurveTo(x0 + 2.57 * divx, y0 + 5 * divy, x0 + 2.6 * divx, y0 + 5.5 * divy);
+                cx.lineTo(x0 + 3 * divx, y0 + 6.8 * divy);
+                cx.quadraticCurveTo(x0 + 3.45 * divx, y0 + 7.2 * divy, x0 + 3.9 * divx, y0 + 6.8 * divy);
+                cx.lineTo(x0 + 4.55 * divx, y0 + 6.25 * divy);
+                cx.lineTo(x0 + 4.75 * divx, y0 + 5.35 * divy);
+                cx.lineTo(x0 + 4.8 * divx, y0 + 4.2 * divy);
+                cx.bezierCurveTo(x0 + 5.2 * divx, y0 + 2 * divy, x0 + 3 * divx, y0 + 1.2 * divy, x0 + 2.8 * divx, y0 + 2.5 * divy)
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+            }
+
+            // hair outline
+            function drawHairOutline() {
+                cx.fillStyle = 'ad7000';
+                cx.beginPath();
+                cx.moveTo(x0 + 2.8 * divx, y0 + 2.5 * divy);
+                cx.quadraticCurveTo(x0 + 2.3 * divx, y0 + 2.1 * divy, x0 + 3.1 * divx, y0 + 1.4 * divy);
+                cx.quadraticCurveTo(x0 + 4 * divx, y0 + 1 * divy, x0 + 5.1 * divx, y0 + 2.4 * divy);
+                cx.quadraticCurveTo(x0 + 5.35 * divx, y0 + 2.8 * divy, x0 + 5.28 * divx, y0 + 3.6 * divy);
+                cx.lineTo(x0 + 5.2 * divx, y0 + 4.2 * divy);
+                cx.quadraticCurveTo(x0 + 4.8 * divx, y0 + 4.2 * divy, x0 + 4.8 * divx, y0 + 4.8 * divy);
+                cx.lineTo(x0 + 4.75 * divx, y0 + 4.75 * divy);
+                cx.lineTo(x0 + 4.8 * divx, y0 + 4 * divy);
+                cx.quadraticCurveTo(x0 + 4.8 * divx, y0 + 3.5 * divy, x0 + 4.6 * divx, y0 + 3.3 * divy);
+                cx.quadraticCurveTo(x0 + 4.05 * divx, y0 + 2.8 * divy, x0 + 3.7 * divx, y0 + 2 * divy);
+                cx.quadraticCurveTo(x0 + 3.1 * divx, y0 + 2 * divy, x0 + 2.8 * divx, y0 + 2.5 * divy);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+            }
+
+            // ear
+            function drawEar() { 
+                cx.fillStyle = '#f7cc7b';
+                cx.beginPath();
+                cx.moveTo(x0 + 5 * divx, y0 + 4.3 * divy);
+                cx.quadraticCurveTo(x0 + 5.2 * divx, y0 + 4.1 * divy, x0 + 5.33 * divx, y0 + 4.4 * divy);
+                cx.quadraticCurveTo(x0 + 5.35 * divx, y0 + 4.55 * divy, x0 + 5.28 * divx, y0 + 4.8 * divy);
+                cx.lineTo(x0 + 5.2 * divx, y0 + 5.1 * divy);
+                cx.quadraticCurveTo(x0 + 5.05 * divx, y0 + 5.4 * divy, x0 + 4.85 * divx, y0 + 5.4 * divy);
+                cx.quadraticCurveTo(x0 + 4.7 * divx, y0 + 5.3 * divy, x0 + 4.8 * divx, y0 + 5 * divy);
+                cx.stroke();
+                cx.lineTo(x0 + 5 * divx, y0 + 4.3 * divy);
+                cx.fill();
+                cx.closePath();
+            }
+
+            function drawNeck() {
+                cx.fillStyle = '#f7cc7b';
+                cx.beginPath();
+                cx.moveTo(x0 + 5.05 * divx, y0 + 5.35 * divy);
+                cx.quadraticCurveTo(x0 + 4.85 * divx, y0 + 5.65 * divy, x0 + 4.85 * divx, y0 + 6 * divy);
+                cx.lineTo(x0 + 4.82 * divx, y0 + 7.3 * divy);
+                cx.quadraticCurveTo(x0 + 4.6 * divx, y0 + 8.1 * divy, x0 + 4 * divx, y0 + 8.6 * divy);
+                cx.quadraticCurveTo(x0 + 3.4 * divx, y0 + 8 * divy, x0 + 3.13 * divx, y0 + 7.3 * divy);
+                cx.lineTo(x0 + 3.14 * divx, y0 + 6.9 * divy);
+                cx.stroke();
+                cx.lineTo(x0 + 3.14 * divx, y0 + 5 * divy);
+                cx.lineTo(x0 + 5.05 * divx, y0 + 5.35 * divy);
+                cx.fill();
+                cx.closePath();
+            }
+
+            // drawNeck();
+
+            function drawShirt() {
+                cx.fillStyle = '#66013b';
+                cx.beginPath();
+                cx.moveTo(x0 + 3.09 * divx, y0 + 7.799 * divy);
+                cx.lineTo(x0 + 1.47 * divx, y0 + height);
+                cx.lineTo(x0 + 6.21 * divx, y0 + 18 * divy);
+                cx.quadraticCurveTo(x0 + 7 * divx, y0 + 14 * divy, x0 + 6.55 * divx, y0 + 11.4 * divy);
+                cx.lineTo(x0 + 3.13 * divx, y0 + 7.799 * divy);
+                cx.fill();
+                cx.closePath();
+
+
+                cx.beginPath();
+                cx.moveTo(x0 + 3.1 * divx, y0 + 7.8 * divy);
+                cx.lineTo(x0 + divx, y0 + 9.3 * divy);
+                cx.quadraticCurveTo(x0 + .6 * divx, y0 + 9.5 * divy, x0 + .5 * divx, y0 + 10.5 * divy);
+                cx.quadraticCurveTo(x0 + .4 * divx, y0 + 11.5 * divy, x0 + .46 * divx, y0 + 13.5 * divy);
+                cx.lineTo(x0 + .52 * divx, y0 + 16 * divy);
+                cx.quadraticCurveTo(x0 + .49 * divx, y0 + 16.1 * divy, x0 + .51 * divx, y0 + 16.25 * divy)
+                cx.quadraticCurveTo(x0 + .44 * divx, y0 + 16.5 * divy, x0 + .5 * divx, y0 + 17 * divy)
+                cx.lineTo(x0 + .4 * divx, y0 + 17.3 * divy);
+                cx.lineTo(x0 + .44 * divx, y0 + 17.5 * divy);
+                cx.quadraticCurveTo(x0 + .44 * divx, y0 + 17.6 * divy, x0 + .38 * divx, y0 + 17.65 * divy);
+                cx.quadraticCurveTo(x0 + .4 * divx, y0 + 17.7 * divy, x0 + .44 * divx, y0 + 17.8 * divy);
+                cx.lineTo(x0 + .38 * divx, y0 + 17.98 * divy);
+                cx.lineTo(x0 + .3 * divx, y0 + 18.72 * divy);
+                cx.lineTo(x0 + .4 * divx, y0 + 18.85 * divy);
+                cx.quadraticCurveTo(x0 + divx, y0 + 18.95 * divy, x0 + 1.55 * divx, y0 + 18.9 * divy);
+                cx.quadraticCurveTo(x0 + 1.47 * divx, y0 + 19.5 * divy, x0 + 1.48 * divx, y0 + height);
+                cx.moveTo(x0 + 1.55 * divx, y0 + 18.9 * divy);
+                cx.lineTo(x0 + 1.68 * divx, y0 + 15 * divy);
+                cx.lineTo(x0 + 1.66 * divx, y0 + 13.6 * divy);
+                cx.quadraticCurveTo(x0 + 1.6 * divx, y0 + 12.8 * divy, x0 + 1.45 * divx, y0 + 12 * divy);
+                cx.moveTo(x0 + 3.1 * divx, y0 + 7.8 * divy);
+                cx.lineTo(x0 + 5.1 * divx, y0 + 8.15 * divy);
+                cx.lineTo(x0 + 6.75 * divx, y0 + 9.2 * divy);
+                cx.quadraticCurveTo(x0 + 7.1 * divx, y0 + 9.65 * divy, x0 + 7.2 * divx, y0 + 10.3 * divy);
+                cx.quadraticCurveTo(x0 + 7.5 * divx, y0 + 12 * divy, x0 + 7.73 * divx, y0 + 13.8 * divy);
+                cx.lineTo(x0 + 7.73 * divx, y0 + 15 * divy);
+                cx.quadraticCurveTo(x0 + 7.7 * divx, y0 + 15.4 * divy, x0 + 7.55 * divx, y0 + 15.75 * divy);
+                cx.quadraticCurveTo(x0 + 7.48 * divx, y0 + 15.91 * divy, x0 + 7.67 * divx, y0 + 16 * divy);
+                cx.quadraticCurveTo(x0 + 7.74 * divx, y0 + 16.1 * divy, x0 + 7.61 * divx, y0 + 16.7 * divy);
+                cx.lineTo(x0 + 7.68 * divx, y0 + 16.9 * divy);
+                cx.quadraticCurveTo(x0 + 7.61 * divx, y0 + 17.1 * divy, x0 + 7.73 * divx, y0 + 17.4 * divy);
+                cx.lineTo(x0 + 7.74 * divx, y0 + 17.8 * divy);
+                cx.lineTo(x0 + 7.62 * divx, y0 + 17.9 * divy);
+                cx.quadraticCurveTo(x0 + 7.4 * divx, y0 + 17.85 * divy, x0 + 7.22 * divx, y0 + 17.73 * divy);
+                cx.lineTo(x0 + 6.75 * divx, y0 + 17.78 * divy);
+                cx.lineTo(x0 + 6.45 * divx, y0 + 17.7 * divy);
+                cx.lineTo(x0 + 6.35 * divx, y0 + 17.95 * divy);
+                cx.lineTo(x0 + 6.4 * divx, y0 + 18.17 * divy);
+                cx.quadraticCurveTo(x0 + 6.2 * divx, y0 + 18 * divy, x0 + 6.21 * divx, y0 + 17.8 * divy);
+                cx.quadraticCurveTo(x0 + 6.3 * divx, y0 + 17.3 * divy, x0 + 6.22 * divx, y0 + 17.05 * divy);
+                cx.quadraticCurveTo(x0 + 6.2 * divx, y0 + 16.95 * divy, x0 + 6.22 * divx, y0 + 16.85 * divy);
+                cx.quadraticCurveTo(x0 + 6.5 * divx, y0 + 14.5 * divy, x0 + 6.45 * divx, y0 + 13.5 * divy);
+                cx.quadraticCurveTo(x0 + 6.5 * divx, y0 + 12 * divy, x0 + 6.55 * divx, y0 + 11.5 * divy);
+                cx.moveTo(x0 + 6.21 * divx, y0 + 17.8 * divy);
+                cx.quadraticCurveTo(x0 + 6.3 * divx, y0 + 19.2 * divy, x0 + 6.6 * divx, y0 + 19.4 * divy);
+                cx.lineTo(x0 + 6.75 * divx, y0 + height);
+                cx.lineTo(x0 + 1.48 * divx, y0 + height);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+            }
+
+            function drawCollar() {
+                cx.fillStyle = '#66013b';
+                cx.beginPath();
+                cx.moveTo(x0 + 3.15 * divx, y0 + 7 * divy);
+                cx.quadraticCurveTo(x0 + 3 * divx, y0 + 7.35 * divy, x0 + 2.85 * divx, y0 + 8 * divy);
+                cx.quadraticCurveTo(x0 + 3.1 * divx, y0 + 9.1 * divy, x0 + 3.99 * divx, y0 + 9.55 * divy);
+                cx.quadraticCurveTo(x0 + 5 * divx, y0 + 8.8 * divy, x0 + 5.15 * divx, y0 + 8.05 * divy);
+                cx.quadraticCurveTo(x0 + 5.06 * divx, y0 + 7.5 * divy, x0 + 4.85 * divx, y0 + 7 * divy);
+                cx.lineTo(x0 + 4.82 * divx, y0 + 7.35 * divy);
+                cx.quadraticCurveTo(x0 + 4.5 * divx, y0 + 8.2 * divy, x0 + 4 * divx, y0 + 8.6 * divy);
+                cx.quadraticCurveTo(x0 + 3.42 * divx, y0 + 8 * divy, x0 + 3.15 * divx, y0 + 7.35 * divy);
+                cx.lineTo(x0 + 3.15 * divx, y0 + 7 * divy);
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+            }
+
+            //drawCollar();
+
+            //drawShirt();
+
+            // functions in correct order
+            function drawMe() {
+                drawShirt();
+                drawNeck();
+                drawCollar();
+                drawExtraSpace();
+                drawFaceOutline();
+                drawHairOutline();
+                drawEar();
+
+            }
+
+            drawMe();
+
+
+            function setDynamicBackground(){
+                //generate the image from the canvas
+                var imageDataURL = canvas.toDataURL();
+            
+                //set the dynamic image as the background
+                document.body.style.background = 
+                "transparent url('"+imageDataURL+"') repeat";
+            }
+            
+        </script>
+        
     </head>
-    <body>
-        <canvas id = "canvas" width = "600" height = "600"
-        ></canvas>
-        <script src="main.js"></script>
+    <body onload="setDynamicBackground()">
+        <img src="img/me.jpg"  style="opacity:0.0;filter:alpha(opacity=0);"/>
     </body>
 
 
