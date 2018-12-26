@@ -3,17 +3,45 @@
         <title> Cherry AK </title>
         <script type="text/javascript">
 
+            var myWindow = window.open('', '', 'width=1000, height=10000');
+            
+
             var canvas = document.createElement("canvas");
             cx = canvas.getContext("2d");
 
             canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight + 230;
+            canvas.height = window.innerHeight + 360;
 
             w = canvas.width;
             h = canvas.height;
 
             cx.strokeStyle = 'black';
-            cx.fillStyle = '#f7cc7b';
+            cx.fillStyle = 'rgba(140, 0, 79, 1)';
+
+            var gradient = cx.createLinearGradient(0, 0, 0, h);
+            gradient.addColorStop('0', '#4a03a0');
+            gradient.addColorStop('0.5','#ac15c6');
+            gradient.addColorStop('1.0', '#c615b2');
+            cx.fillStyle = gradient;
+            cx.rect(0, 0, w, h);
+            cx.fill();
+
+            cx.font = '150px Verdana';
+            cx.lineWidth *= 3;
+            cx.shadowBlur = 1;
+            gradient = cx.createLinearGradient(0, 0, w, 0);
+            gradient.addColorStop('0', '#4a03a0');
+            gradient.addColorStop('0.5','#ac15c6');
+            gradient.addColorStop('1.0', '#c615b2');
+            cx.strokeStyle = gradient;
+            cx.strokeText('Cherry AK', 270, 170);
+
+            cx.shadowBlur = 7;
+            cx.shadowColor='black';
+
+
+            cx.strokeStyle = 'black';
+            cx.lineWidth /= 2;
 
             function makeCherry(x, y, r) {
                 cx.beginPath();
@@ -24,7 +52,7 @@
 
             var x0 = 340;
             var width = 800;
-            var y0 = 50;
+            var y0 = 250;
             var height = 1030;
             divy = height / 20;
             var divx = width / 10;
@@ -141,6 +169,7 @@
             // drawNeck();
 
             function drawShirt() {
+                cx.shadowBlur = 0;
                 cx.fillStyle = '#66013b';
                 cx.beginPath();
                 cx.moveTo(x0 + 3.09 * divx, y0 + 7.799 * divy);
@@ -150,6 +179,7 @@
                 cx.lineTo(x0 + 3.13 * divx, y0 + 7.799 * divy);
                 cx.fill();
                 cx.closePath();
+                
 
 
                 cx.beginPath();
@@ -203,6 +233,7 @@
                 cx.fill();
                 cx.stroke();
                 cx.closePath();
+                cx.shadowBlur = 7;
             }
 
             // shirt collar
@@ -483,23 +514,25 @@
                 cx.closePath();
 
                 cx.beginPath();
-                cx.moveTo(x0 + 3.66 * divx, y0 + 3.19 * divy);
-                cx.lineTo(x0 + 3.84 * divx, y0 + 3.32 * divy);
+                cx.moveTo(x0 + 3.62 * divx, y0 + 3.17 * divy);
+                cx.lineTo(x0 + 3.8 * divx, y0 + 3.3 * divy);
                 cx.stroke();
                 cx.closePath();
             }
             
             function drawNose() {
+                cx.shadowBlur = 0;
                 cx.fillStyle = '#f7cc7b';
                 cx.beginPath();
-                cx.moveTo(x0 + 3.078 * divx, y0 + 3.7 * divy);
+                cx.moveTo(x0 + 3.078 * divx, y0 + 3.8 * divy);
                 cx.quadraticCurveTo(x0 + 2.7 * divx, y0 + 4.8 * divy, x0 + 2.95 * divx, y0 + 4.9 * divy);
                 cx.lineTo(x0 + 3.02 * divx, y0 + 4.94 * divy);
                 cx.stroke();
                 cx.lineTo(x0 + 3.5 * divx, y0 + 4.85 * divy);
-                cx.lineTo(x0 + 3.078 * divx, y0 + 3.7 * divy);
+                cx.lineTo(x0 + 3.078 * divx, y0 + 3.8 * divy);
                 cx.fill();
                 cx.closePath();
+                cx.shadowBlur = 7;
 
                 cx.lineWidth /= 3;
 
@@ -562,8 +595,11 @@
 
             drawMe();
 
+            
+
 
             function setDynamicBackground(){
+
                 //generate the image from the canvas
                 var imageDataURL = canvas.toDataURL();
             
@@ -576,7 +612,35 @@
         
     </head>
     <body onload="setDynamicBackground()">
-        <img src="img/me.jpg"  style="opacity:0;filter:alpha;" width = '200px' height = '1280px'/>
+
+        <!-- <img src="img/me.jpg"  style="opacity:0;filter:alpha;" width = '200px' height = '1250x'/> -->
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+       
+       
+   
+        <div id="contentframe" style='position:relative; top:20px; left: 100px;'>
+            <iframe src="https://open.spotify.com/embed/artist/45dKqw5pisqGFJAnD21G9o" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media" align='left'></iframe>
+        </div>
+
+        <div id="contentframe" style='position:relative; top:20px; right: 100px;'>
+            <iframe width="20%" height="400" scrolling="yes" frameborder="no" allow="autoplay" align='right' src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/671737338&color=%23ec94a4&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+        </div>
     </body>
 
 

@@ -1,34 +1,589 @@
-window.onload = function() {
-    var canvas = document.createElement("canvas");
-    cx = canvas.getContext("2d");
+window.onload = function setDynamicBackground(){
+    //generate the image from the canvas
+    var imageDataURL = canvas.toDataURL();
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    //set the dynamic image as the background
+    document.body.style.background = 
+    "transparent url('"+imageDataURL+"') repeat";
+}
 
-    cx.strokeStyle = 'black';
-    cx.fillStyle = "rgba(232, 9, 9, 1)";
+var canvas = document.createElement("canvas");
+            cx = canvas.getContext("2d");
 
-    function makeCherry(x, y) {
-        cx.beginPath();
-        cx.arc(x, y, 50, 0, Math.PI * 2);
-        cx.fill();
-        cx.stroke();
-    }
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight + 230;
 
-    function setUp() {
-        makeCherry(100, 150);
-        makeCherry(1200, 200);
-    }
+            w = canvas.width;
+            h = canvas.height;
 
-    setUp();
+            cx.strokeStyle = 'black';
+            cx.fillStyle = 'rgba(140, 0, 79, 1)';
 
-    function setDynamicBackground(){
-        //generate the image from the canvas
-        var imageDataURL = canvas.toDataURL();
-      
-        //set the dynamic image as the background
-        document.body.style.background = 
-         "transparent url('"+imageDataURL+"') repeat";
-      }
-      
-    }
+            
+            function makeCircle(x, y) {
+                cx.beginPath();
+                cx.arc(x, y, 15, 0, 2 * Math.PI);
+                cx.fill();
+                cx.closePath();
+            }
+
+            // var i = 400, j = 100;
+            // function doNothing(i, j) { makeCircle(i, j); i += 20, j += 40; }
+
+            // // makeCircle(400, 100);
+            // setInterval(doNothing, 100);
+            // // makeCircle(390, 102);
+
+
+            function makeCherry(x, y, r) {
+                cx.beginPath();
+                cx.arc(x, y, r, 0, Math.PI * 2);
+                cx.fill();
+                cx.stroke();
+            }
+
+            var x0 = 340;
+            var width = 800;
+            var y0 = 250;
+            var height = 1030;
+            divy = height / 20;
+            var divx = width / 10;
+
+            function drawGrid() {
+            
+                cx.beginPath();
+                cx.rect(x0, y0, width, height);
+                cx.stroke();
+                cx.globalAlpha = .4;
+                
+                for (var i = x0 + divx; i < width + x0; i += divx) {
+                    cx.beginPath();
+                    cx.moveTo(i, y0);
+                    cx.lineTo(i, height + y0);
+                    cx.stroke();
+                }
+                
+                for (var i = y0 + divy; i < height + y0; i += divy) {
+                    cx.beginPath();
+                    cx.moveTo(x0, i);
+                    cx.lineTo(x0 + width, i);
+                    cx.stroke();
+                }
+            }
+
+            // drawGrid();
+
+            cx.globalAlpha = 1;
+
+            // fill in space between face and ear
+            function drawExtraSpace() {
+                cx.fillStyle = '#f7cc7b';
+                cx.beginPath();
+                cx.moveTo(x0 + 5.1 * divx, y0 + 4.3 * divy);
+                cx.lineTo(x0 + 4 * divx, y0 + 4 * divy);
+                cx.lineTo(x0 + 4.9 * divx, y0 + 5.1 * divy);
+                cx.lineTo(x0 + 5.1 * divx, y0 + 4.3 * divy);
+                cx.fill();
+                cx.closePath();
+            }
+
+            // face outline
+            function drawFaceOutline() {
+                cx.fillStyle = '#f7cc7b';
+                cx.beginPath();
+                cx.moveTo(x0 + 2.8 * divx, y0 + 2.5 * divy);
+                cx.quadraticCurveTo(x0 + 2.57 * divx, y0 + 3 * divy, x0 + 2.6 * divx, y0 + 3.5 * divy);
+                cx.quadraticCurveTo(x0 + 2.62 * divx, y0 + 3.98 * divy, x0 + 2.6 * divx, y0 + 4.5 * divy);
+                cx.quadraticCurveTo(x0 + 2.57 * divx, y0 + 5 * divy, x0 + 2.6 * divx, y0 + 5.5 * divy);
+                cx.lineTo(x0 + 3 * divx, y0 + 6.8 * divy);
+                cx.quadraticCurveTo(x0 + 3.45 * divx, y0 + 7.2 * divy, x0 + 3.9 * divx, y0 + 6.8 * divy);
+                cx.lineTo(x0 + 4.55 * divx, y0 + 6.25 * divy);
+                cx.lineTo(x0 + 4.75 * divx, y0 + 5.35 * divy);
+                cx.lineTo(x0 + 4.8 * divx, y0 + 4.2 * divy);
+                cx.bezierCurveTo(x0 + 5.2 * divx, y0 + 2 * divy, x0 + 3 * divx, y0 + 1.2 * divy, x0 + 2.8 * divx, y0 + 2.5 * divy)
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+            }
+
+            // hair outline
+            function drawHairOutline() {
+                cx.fillStyle = 'ad7000';
+                cx.beginPath();
+                cx.moveTo(x0 + 2.8 * divx, y0 + 2.5 * divy);
+                cx.quadraticCurveTo(x0 + 2.3 * divx, y0 + 2.1 * divy, x0 + 3.1 * divx, y0 + 1.4 * divy);
+                cx.quadraticCurveTo(x0 + 4 * divx, y0 + 1 * divy, x0 + 5.1 * divx, y0 + 2.4 * divy);
+                cx.quadraticCurveTo(x0 + 5.35 * divx, y0 + 2.8 * divy, x0 + 5.28 * divx, y0 + 3.6 * divy);
+                cx.lineTo(x0 + 5.2 * divx, y0 + 4.2 * divy);
+                cx.quadraticCurveTo(x0 + 4.8 * divx, y0 + 4.2 * divy, x0 + 4.8 * divx, y0 + 4.8 * divy);
+                cx.lineTo(x0 + 4.75 * divx, y0 + 4.75 * divy);
+                cx.lineTo(x0 + 4.8 * divx, y0 + 4 * divy);
+                cx.quadraticCurveTo(x0 + 4.8 * divx, y0 + 3.5 * divy, x0 + 4.6 * divx, y0 + 3.3 * divy);
+                cx.quadraticCurveTo(x0 + 4.05 * divx, y0 + 2.8 * divy, x0 + 3.7 * divx, y0 + 2 * divy);
+                cx.quadraticCurveTo(x0 + 3.1 * divx, y0 + 2 * divy, x0 + 2.8 * divx, y0 + 2.5 * divy);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+            }
+
+            // ear
+            function drawEar() { 
+                cx.fillStyle = '#f7cc7b';
+                cx.beginPath();
+                cx.moveTo(x0 + 5 * divx, y0 + 4.3 * divy);
+                cx.quadraticCurveTo(x0 + 5.2 * divx, y0 + 4.1 * divy, x0 + 5.33 * divx, y0 + 4.4 * divy);
+                cx.quadraticCurveTo(x0 + 5.35 * divx, y0 + 4.55 * divy, x0 + 5.28 * divx, y0 + 4.8 * divy);
+                cx.lineTo(x0 + 5.2 * divx, y0 + 5.1 * divy);
+                cx.quadraticCurveTo(x0 + 5.05 * divx, y0 + 5.4 * divy, x0 + 4.85 * divx, y0 + 5.4 * divy);
+                cx.quadraticCurveTo(x0 + 4.7 * divx, y0 + 5.3 * divy, x0 + 4.8 * divx, y0 + 5 * divy);
+                cx.stroke();
+                cx.lineTo(x0 + 5 * divx, y0 + 4.3 * divy);
+                cx.fill();
+                cx.closePath();
+            }
+
+            function drawNeck() {
+                cx.fillStyle = '#f7cc7b';  // skin color
+                cx.beginPath();
+                cx.moveTo(x0 + 5.05 * divx, y0 + 5.35 * divy);
+                cx.quadraticCurveTo(x0 + 4.85 * divx, y0 + 5.65 * divy, x0 + 4.85 * divx, y0 + 6 * divy);
+                cx.lineTo(x0 + 4.82 * divx, y0 + 7.3 * divy);
+                cx.quadraticCurveTo(x0 + 4.6 * divx, y0 + 8.1 * divy, x0 + 4 * divx, y0 + 8.6 * divy);
+                cx.quadraticCurveTo(x0 + 3.4 * divx, y0 + 8 * divy, x0 + 3.13 * divx, y0 + 7.3 * divy);
+                cx.lineTo(x0 + 3.14 * divx, y0 + 6.9 * divy);
+                cx.stroke();
+                cx.lineTo(x0 + 3.14 * divx, y0 + 5 * divy);
+                cx.lineTo(x0 + 5.05 * divx, y0 + 5.35 * divy);
+                cx.fill();
+                cx.closePath();
+            }
+
+            // drawNeck();
+
+            function drawShirt() {
+                cx.fillStyle = '#66013b';
+                cx.beginPath();
+                cx.moveTo(x0 + 3.09 * divx, y0 + 7.799 * divy);
+                cx.lineTo(x0 + 1.47 * divx, y0 + height);
+                cx.lineTo(x0 + 6.21 * divx, y0 + 18 * divy);
+                cx.quadraticCurveTo(x0 + 7 * divx, y0 + 14 * divy, x0 + 6.55 * divx, y0 + 11.4 * divy);
+                cx.lineTo(x0 + 3.13 * divx, y0 + 7.799 * divy);
+                cx.fill();
+                cx.closePath();
+
+
+                cx.beginPath();
+                cx.moveTo(x0 + 3.1 * divx, y0 + 7.8 * divy);
+                cx.lineTo(x0 + divx, y0 + 9.3 * divy);
+                cx.quadraticCurveTo(x0 + .6 * divx, y0 + 9.5 * divy, x0 + .5 * divx, y0 + 10.5 * divy);
+                cx.quadraticCurveTo(x0 + .4 * divx, y0 + 11.5 * divy, x0 + .46 * divx, y0 + 13.5 * divy);
+                cx.lineTo(x0 + .52 * divx, y0 + 16 * divy);
+                cx.quadraticCurveTo(x0 + .49 * divx, y0 + 16.1 * divy, x0 + .51 * divx, y0 + 16.25 * divy)
+                cx.quadraticCurveTo(x0 + .44 * divx, y0 + 16.5 * divy, x0 + .5 * divx, y0 + 17 * divy)
+                cx.lineTo(x0 + .4 * divx, y0 + 17.3 * divy);
+                cx.lineTo(x0 + .44 * divx, y0 + 17.5 * divy);
+                cx.quadraticCurveTo(x0 + .44 * divx, y0 + 17.6 * divy, x0 + .38 * divx, y0 + 17.65 * divy);
+                cx.quadraticCurveTo(x0 + .4 * divx, y0 + 17.7 * divy, x0 + .44 * divx, y0 + 17.8 * divy);
+                cx.lineTo(x0 + .38 * divx, y0 + 17.98 * divy);
+                cx.lineTo(x0 + .3 * divx, y0 + 18.72 * divy);
+                cx.lineTo(x0 + .4 * divx, y0 + 18.85 * divy);
+                cx.quadraticCurveTo(x0 + divx, y0 + 18.95 * divy, x0 + 1.55 * divx, y0 + 18.9 * divy);
+                cx.quadraticCurveTo(x0 + 1.47 * divx, y0 + 19.5 * divy, x0 + 1.48 * divx, y0 + height);
+                cx.moveTo(x0 + 1.55 * divx, y0 + 18.9 * divy);
+                cx.lineTo(x0 + 1.68 * divx, y0 + 15 * divy);
+                cx.lineTo(x0 + 1.66 * divx, y0 + 13.6 * divy);
+                cx.quadraticCurveTo(x0 + 1.6 * divx, y0 + 12.8 * divy, x0 + 1.45 * divx, y0 + 12 * divy);
+                cx.moveTo(x0 + 3.1 * divx, y0 + 7.8 * divy);
+                cx.lineTo(x0 + 5.1 * divx, y0 + 8.15 * divy);
+                cx.lineTo(x0 + 6.75 * divx, y0 + 9.2 * divy);
+                cx.quadraticCurveTo(x0 + 7.1 * divx, y0 + 9.65 * divy, x0 + 7.2 * divx, y0 + 10.3 * divy);
+                cx.quadraticCurveTo(x0 + 7.5 * divx, y0 + 12 * divy, x0 + 7.73 * divx, y0 + 13.8 * divy);
+                cx.lineTo(x0 + 7.73 * divx, y0 + 15 * divy);
+                cx.quadraticCurveTo(x0 + 7.7 * divx, y0 + 15.4 * divy, x0 + 7.55 * divx, y0 + 15.75 * divy);
+                cx.quadraticCurveTo(x0 + 7.48 * divx, y0 + 15.91 * divy, x0 + 7.67 * divx, y0 + 16 * divy);
+                cx.quadraticCurveTo(x0 + 7.74 * divx, y0 + 16.1 * divy, x0 + 7.61 * divx, y0 + 16.7 * divy);
+                cx.lineTo(x0 + 7.68 * divx, y0 + 16.9 * divy);
+                cx.quadraticCurveTo(x0 + 7.61 * divx, y0 + 17.1 * divy, x0 + 7.73 * divx, y0 + 17.4 * divy);
+                cx.lineTo(x0 + 7.74 * divx, y0 + 17.8 * divy);
+                cx.lineTo(x0 + 7.62 * divx, y0 + 17.9 * divy);
+                cx.quadraticCurveTo(x0 + 7.4 * divx, y0 + 17.85 * divy, x0 + 7.22 * divx, y0 + 17.73 * divy);
+                cx.lineTo(x0 + 6.75 * divx, y0 + 17.78 * divy);
+                cx.lineTo(x0 + 6.45 * divx, y0 + 17.7 * divy);
+                cx.lineTo(x0 + 6.35 * divx, y0 + 17.95 * divy);
+                cx.lineTo(x0 + 6.4 * divx, y0 + 18.17 * divy);
+                cx.quadraticCurveTo(x0 + 6.2 * divx, y0 + 18 * divy, x0 + 6.21 * divx, y0 + 17.8 * divy);
+                cx.quadraticCurveTo(x0 + 6.3 * divx, y0 + 17.3 * divy, x0 + 6.22 * divx, y0 + 17.05 * divy);
+                cx.quadraticCurveTo(x0 + 6.2 * divx, y0 + 16.95 * divy, x0 + 6.22 * divx, y0 + 16.85 * divy);
+                cx.quadraticCurveTo(x0 + 6.5 * divx, y0 + 14.5 * divy, x0 + 6.45 * divx, y0 + 13.5 * divy);
+                cx.quadraticCurveTo(x0 + 6.5 * divx, y0 + 12 * divy, x0 + 6.55 * divx, y0 + 11.5 * divy);
+                cx.moveTo(x0 + 6.21 * divx, y0 + 17.8 * divy);
+                cx.quadraticCurveTo(x0 + 6.3 * divx, y0 + 19.2 * divy, x0 + 6.6 * divx, y0 + 19.4 * divy);
+                cx.lineTo(x0 + 6.75 * divx, y0 + height);
+                cx.lineTo(x0 + 1.48 * divx, y0 + height);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+            }
+
+            // shirt collar
+            function drawCollar() {
+                cx.fillStyle = '#66013b';
+                cx.beginPath();
+                cx.moveTo(x0 + 3.15 * divx, y0 + 7 * divy);
+                cx.quadraticCurveTo(x0 + 3 * divx, y0 + 7.35 * divy, x0 + 2.85 * divx, y0 + 8 * divy);
+                cx.quadraticCurveTo(x0 + 3.1 * divx, y0 + 9.1 * divy, x0 + 3.99 * divx, y0 + 9.55 * divy);
+                cx.quadraticCurveTo(x0 + 5 * divx, y0 + 8.8 * divy, x0 + 5.15 * divx, y0 + 8.05 * divy);
+                cx.quadraticCurveTo(x0 + 5.06 * divx, y0 + 7.5 * divy, x0 + 4.85 * divx, y0 + 7 * divy);
+                cx.lineTo(x0 + 4.82 * divx, y0 + 7.35 * divy);
+                cx.quadraticCurveTo(x0 + 4.5 * divx, y0 + 8.2 * divy, x0 + 4 * divx, y0 + 8.6 * divy);
+                cx.quadraticCurveTo(x0 + 3.42 * divx, y0 + 8 * divy, x0 + 3.15 * divx, y0 + 7.35 * divy);
+                cx.lineTo(x0 + 3.15 * divx, y0 + 7 * divy);
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+            }
+
+            // shirt buttons
+            function drawButtons() {
+                cx.fillStyle = '#66013b';  // maroon
+                cx.beginPath();
+                cx.moveTo(x0 + 3.8 * divx, y0 + 9.5 * divy);
+                cx.lineTo(x0 + 3.9 * divx, y0 + height);
+                cx.lineTo(x0 + 4.3 * divx, y0 + height);
+                cx.lineTo(x0 + 4.2 * divx, y0 + 9.5 * divy)
+                cx.stroke();
+                cx.closePath();
+
+                singleButton(x0 + 4 * divx, y0 + 10 * divy);
+                singleButton(x0 + 4.02 * divx, y0 + 12.1 * divy);
+                singleButton(x0 + 4.04 * divx, y0 + 14.2 * divy);
+                singleButton(x0 + 4.06 * divx, y0 + 16.3 * divy);
+                singleButton(x0 + 4.08 * divx, y0 + 18.4 * divy);
+            }
+
+            // draw one button at a time
+            function singleButton(x, y) {
+                cx.fillStyle = '#ffeaf6'  // white with tinge of pink
+                cx.beginPath();
+                cx.arc(x, y, 7, 0, Math.PI * 2);
+                cx.fill();
+                cx.closePath();
+
+                cx.fillStyle = '#280419'  // black pink
+                cx.beginPath();
+                cx.arc(x - 2, y - 2, 1, 0, Math.PI * 2);
+                cx.fill();
+                cx.closePath();
+
+                cx.beginPath();
+                cx.arc(x + 2, y - 2, 1, 0, Math.PI * 2);
+                cx.fill();
+                cx.closePath();
+
+                cx.beginPath();
+                cx.arc(x + 2, y + 2, 1, 0, Math.PI * 2);
+                cx.fill();
+                cx.closePath();
+
+                cx.beginPath();
+                cx.arc(x - 2, y + 2, 1, 0, Math.PI * 2);
+                cx.fill();
+                cx.closePath();
+            }
+
+            function drawArms() {
+                cx.fillStyle = '#f7cc7b';  // skin color
+
+                // left arm
+                cx.beginPath();
+                cx.moveTo(x0 + .47 * divx, y0 + 18.8 * divy);
+                cx.lineTo(x0 + .5 * divx, y0 + height);
+                cx.lineTo(x0 + 1.5 * divx, y0 + height);
+                cx.lineTo(x0 + 1.6 * divx, y0 + 18.8 * divy);
+                cx.lineTo(x0 + .47 * divx, y0 + 18.8 * divy);
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+
+                // right arm
+                cx.beginPath();
+                cx.moveTo(x0 + 6.3 * divx, y0 + 17.6 * divy);
+                cx.lineTo(x0 + 6.6 * divx, y0 + height);
+                cx.lineTo(x0 + 7.6 * divx, y0 + height);
+                cx.quadraticCurveTo(x0 + 7.65 * divx, y0 + 19 * divy, x0 + 7.6 * divx, y0 + 17.6 * divy);
+                cx.lineTo(x0 + 6.3 * divx, y0 + 17.6 * divy);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+            }
+
+            function drawGlasses() {
+                cx.fillStyle = 'black';
+                cx.beginPath();
+                cx.ellipse(x0 + 2.65 * divx, y0 + 4 * divy, 31, 28, 0, 0, Math.PI * 2);
+                //cx.ellipse(x0 + 2.65 * divx, y0 + 4 * divy, 28, 25, 0, 0, Math.PI * 2);
+                cx.fill();
+                cx.closePath();
+            }
+
+            //drawGlasses();
+
+            function drawHeadPhones() {
+                // shape on right side
+                cx.fillStyle = 'white';
+                cx.beginPath();
+                cx.moveTo(x0 + 3 * divx, y0 + 7.4 * divy);
+                cx.quadraticCurveTo(x0 + 2.8 * divx, y0 + 7.5 * divy, x0 + 2.78 * divx, y0 + 7.7 * divy);
+                cx.quadraticCurveTo(x0 + 2.75 * divx, y0 + 8 * divy, x0 + 2.78 * divx, y0 + 8.2 * divy);
+                cx.quadraticCurveTo(x0 + 2.8 * divx, y0 + 8.7 * divy, x0 + 3.02 * divx, y0 + 8.95 * divy);
+                cx.quadraticCurveTo(x0 + 3.15 * divx, y0 + 9.7 * divy, x0 + 3.5 * divx, y0 + 9.7 * divy);
+                cx.quadraticCurveTo(x0 + 3.9 * divx, y0 + 9.76 * divy, x0 + 4.05 * divx, y0 + 9.4 * divy);
+                cx.quadraticCurveTo(x0 + 4.1 * divx, y0 + 8.4 * divy, x0 + 3.63 * divx, y0 + 7.98 * divy);
+                cx.quadraticCurveTo(x0 + 3.4 * divx, y0 + 7.89 * divy, x0 + 3.15 * divx, y0 + 8.3 * divy);
+                cx.lineTo(x0 + 3.05 * divx, y0 + 8.35 * divy);
+                cx.quadraticCurveTo(x0 + 2.8 * divx, y0 + 8 * divy, x0 + 2.9 * divx, y0 + 7.8 * divy);
+                cx.lineTo(x0 + 3 * divx, y0 + 7.4 * divy);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+
+                // ellipse right side
+                cx.beginPath();
+                cx.ellipse(x0 + 3.3 * divx, y0 + 9 * divy, 13, 26.5, 43.5, 0, 2 * Math.PI);
+                cx.stroke();
+                cx.closePath();
+
+                // half ellipse right side
+                cx.beginPath();
+                cx.moveTo(x0 + 3.19 * divx, y0 + 8.29 * divy);
+                cx.quadraticCurveTo(x0 + 3.5 * divx, y0 + 8.5 * divy, x0 + 3.6 * divx, y0 + 9 * divy);
+                cx.quadraticCurveTo(x0 + 3.7 * divx, y0 + 9.6 * divy, x0 + 3.4 * divx, y0 + 9.7 * divy);
+                cx.stroke();
+                cx.closePath();
+
+                // second half ellipse right side
+                cx.beginPath();
+                cx.moveTo(x0 + 3.4 * divx, y0 + 8 * divy);
+                cx.quadraticCurveTo(x0 + 3.8 * divx, y0 + 8.3 * divy, x0 + 3.85 * divx, y0 + 9 * divy);
+                cx.quadraticCurveTo(x0 + 3.9 * divx, y0 + 9.6 * divy, x0 + 3.8 * divx, y0 + 9.65 * divy);
+                cx.stroke();
+                cx.closePath();
+
+                // shape on left side
+                cx.beginPath();
+                cx.moveTo(x0 + 5.05 * divx, y0 + 7.55 * divy);
+                cx.quadraticCurveTo(x0 + 5.25 * divx, y0 + 7.75 * divy, x0 + 5.27 * divx, y0 + 8 * divy);
+                cx.quadraticCurveTo(x0 + 5.18 * divx, y0 + 9.6 * divy, x0 + 4.8 * divx, y0 + 9.68 * divy);
+                cx.quadraticCurveTo(x0 + 4.5 * divx, y0 + 9.8 * divy, x0 + 4.25 * divx, y0 + 9.45 * divy);
+                cx.quadraticCurveTo(x0 + 4.2 * divx, y0 + 8.4 * divy, x0 + 4.68 * divx, y0 + 7.95 * divy);
+                cx.quadraticCurveTo(x0 + 4.85 * divx, y0 + 7.9 * divy, x0 + 5.12 * divx, y0 + 8.35 * divy);
+                cx.quadraticCurveTo(x0 + 5.2 * divx, y0 + 8 * divy, x0 + 5.12 * divx, y0 + 7.9 * divy);
+                cx.quadraticCurveTo(x0 + 5.09 * divx, y0 + 7.7 * divy, x0 + 5.05 * divx, y0 + 7.55 * divy);
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+
+                // ellipse left side
+                cx.beginPath();
+                cx.ellipse(x0 + 4.97 * divx, y0 + 9 * divy, 8, 26.5, 9.8, 0, 2 * Math.PI);
+                cx.stroke();
+                cx.closePath();
+
+                // half ellipse on left side
+                cx.beginPath();
+                cx.moveTo(x0 + 5.09 * divx, y0 + 8.3 * divy);
+                cx.quadraticCurveTo(x0 + 4.6 * divx, y0 + 8.8 * divy, x0 + 4.75 * divx, y0 + 9.7 * divy);
+                cx.stroke();
+                cx.closePath();
+
+                // second half ellipse on left side
+                cx.beginPath();
+                cx.moveTo(x0 + 4.85 * divx, y0 + 7.97 * divy);
+                cx.quadraticCurveTo(x0 + 4.3 * divx, y0 + 8.6 * divy, x0 + 4.4 * divx, y0 + 9.62 * divy);
+                cx.stroke();
+                cx.closePath();
+                
+            }
+
+            function drawGlasses() {
+                cx.fillStyle = 'black';
+                cx.beginPath();
+                cx.moveTo(x0 + 3.24 * divx, y0 + 3.65 * divy);
+                cx.quadraticCurveTo(x0 + 3.22 * divx, y0 + 3.75 * divy, x0 + 3.245 * divx, y0 + 3.85 * divy);
+                cx.quadraticCurveTo(x0 + 3.23 * divx, y0 + 3.9 * divy, x0 + 3.35 * divx, y0 + 4.2 * divy);
+                cx.quadraticCurveTo(x0 + 3.5 * divx, y0 + 4.47 * divy, x0 + 3.8 * divx, y0 + 4.3 * divy);
+                cx.quadraticCurveTo(x0 + 4.1 * divx, y0 + 4.1 * divy, x0 + 4.03 * divx, y0 + 3.44 * divy);
+                cx.quadraticCurveTo(x0 + 4.15 * divx, y0 + 3.4 * divy, x0 + 4.3 * divx, y0 + 3.49 * divy);
+                cx.quadraticCurveTo(x0 + 5 * divx, y0 + 4 * divy, 5 * divx + x0, y0 + 4.25 * divy);
+                cx.lineTo(x0 + 5.11 * divx, y0 + 4.19 * divy);
+                cx.quadraticCurveTo(x0 + 5 * divx, y0 + 3.8 * divy, 4.11 * divx + x0, y0 + 3.21 * divy);
+                cx.quadraticCurveTo(x0 + 4 * divx, y0 + 3.21 * divy, x0 + 3.9 * divx, y0 + 3.2 * divy);
+                cx.lineTo(x0 + 3.9 * divx, y0 + 3.32 * divy);
+                cx.quadraticCurveTo(x0 + 4.05 * divx, y0 + 3.5 * divy, x0 + 3.95 * divx, y0 + 4 * divy);
+                cx.quadraticCurveTo(x0 + 3.76 * divx, y0 + 4.4 * divy, x0 + 3.47 * divx, y0 + 4.24 * divy);
+                cx.quadraticCurveTo(x0 + 3.3 * divx, y0 + 4 * divy, x0 + 3.3 * divx, y0 + 3.6 * divy);
+                cx.lineTo(x0 + 3.24 * divx, y0 + 3.65 * divy);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+
+                cx.beginPath();
+                cx.moveTo(x0 + 3.24 * divx, y0 + 3.7 * divy);
+                cx.quadraticCurveTo(x0 + 3.08 * divx, y0 + 3.62 * divy, x0 + 3.02 * divx, y0 + 3.84 * divy);
+                cx.lineTo(x0 + 2.99 * divx, y0 + 3.84 * divy);
+                cx.quadraticCurveTo(x0 + 2.9 * divx, y0 + 3.5 * divy, x0 + 2.6 * divx, y0 + 3.59 * divy);
+                cx.quadraticCurveTo(x0 + 2.24 * divx, y0 + 3.69 * divy, x0 + 2.3 * divx, y0 + 4.1 * divy);
+                cx.lineTo(x0 + 2.25 * divx, y0 + 4.1 * divy);
+                cx.quadraticCurveTo(x0 + 2.2 * divx, y0 + 3.9 * divy, x0 + 2.15 * divx, y0 + 3.9 * divy);
+                cx.quadraticCurveTo(x0 + 2.05 * divx, y0 + 3.75 * divy, x0 + 2.3 * divx, y0 + 3.66 * divy);
+                cx.quadraticCurveTo(x0 + 2.7 * divx, y0 + 3.35 * divy, x0 + 2.9 * divx, y0 + 3.55 * divy);
+                cx.quadraticCurveTo(x0 + 3.05 * divx, y0 + 3.6 * divy, x0 + 3.05 * divx, y0 + 3.55 * divy);
+                cx.quadraticCurveTo(x0 + 3.2 * divx, y0 + 3.5 * divy, x0 + 3.25 * divx, y0 + 3.55 * divy);
+                cx.quadraticCurveTo(x0 + 3.5 * divx, y0 + 3.1 * divy, x0 + 3.96 * divx, y0 + 3.2 * divy);
+                cx.lineTo(x0 + 3.96 * divx, y0 + 3.38 * divy);
+                cx.quadraticCurveTo(x0 + 3.85 * divx, y0 + 3.2 * divy, x0 + 3.6 * divx, y0 + 3.31 * divy);
+                cx.quadraticCurveTo(x0 + 3.4 * divx, y0 + 3.36 * divy, x0 + 3.3 * divx, y0 + 3.69 * divy);
+                cx.lineTo(x0 + 3.24 * divx, y0 + 3.7 * divy);
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+
+                cx.beginPath();
+                cx.moveTo(x0 + 2.25 * divx, y0 + 4.08 * divy)
+                cx.quadraticCurveTo(x0 + 2.33 * divx, y0 + 4.7 * divy, x0 + 2.65 * divx, y0 + 4.61 * divy);
+                cx.quadraticCurveTo(x0 + 3.1 * divx, y0 + 4.45 * divy, x0 + 3.02 * divx, y0 + 3.8 * divy);
+                cx.lineTo(x0 + 2.99 * divx, y0 + 3.8 * divy);
+                cx.quadraticCurveTo(x0 + 3.06 * divx, y0 + 4.35 * divy, x0 + 2.65 * divx, y0 + 4.52 * divy);
+                cx.quadraticCurveTo(x0 + 2.37 * divx, y0 + 4.6 * divy, x0 + 2.3 * divx, y0 + 4.08 * divy);
+                cx.lineTo(x0 + 2.25 * divx, y0 + 4.08 * divy);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+
+                cx.beginPath();
+                cx.moveTo(x0 + 2.25 * divx, y0 + 4.08 * divy);
+                cx.quadraticCurveTo(x0 + 2.43 * divx, y0 + 4.36 * divy, x0 + 2.6 * divx, y0 + 4.48 * divy);
+                cx.lineTo(x0 + 2.61 * divx, y0 + 4.3 * divy);
+                cx.quadraticCurveTo(x0 + 2.5 * divx, y0 + 4.25 * divy, x0 + 2.28 * divx, y0 + 3.96 * divy);
+                cx.lineTo(x0 + 2.25 * divx, y0 + 4.08 * divy);
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+            }
+
+            function drawEyes() {
+                cx.fillStyle = 'black';
+                cx.beginPath();
+                cx.arc(x0 + 2.8 * divx, y0 + 3.9 * divy, 5, 0, 2 * Math.PI);
+                cx.fill();
+                cx.closePath();
+                cx.beginPath();
+                cx.fillStyle = 'white';
+                cx.arc(x0 + 2.78 * divx, y0 + 3.87 * divy, 1.5, 0, 2 * Math.PI);
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+
+                cx.fillStyle = 'black';
+                cx.beginPath();
+                cx.arc(x0 + 3.7 * divx, y0 + 3.75 * divy, 5, 0, 2 * Math.PI);
+                cx.fill();
+                cx.closePath();
+                cx.beginPath();
+                cx.fillStyle = 'white';
+                cx.arc(x0 + 3.68 * divx, y0 + 3.72 * divy, 1.5, 0, 2 * Math.PI);
+                cx.stroke();
+                cx.fill();
+                cx.closePath();
+
+                cx.beginPath();
+                cx.moveTo(x0 + 2.7 * divx, y0 + 3.44 * divy);
+                cx.lineTo(x0 + 2.88 * divx, y0 + 3.34 * divy);
+                cx.stroke();
+                cx.closePath();
+
+                cx.beginPath();
+                cx.moveTo(x0 + 3.62 * divx, y0 + 3.17 * divy);
+                cx.lineTo(x0 + 3.8 * divx, y0 + 3.3 * divy);
+                cx.stroke();
+                cx.closePath();
+            }
+            
+            function drawNose() {
+                cx.fillStyle = '#f7cc7b';
+                cx.beginPath();
+                cx.moveTo(x0 + 3.078 * divx, y0 + 3.7 * divy);
+                cx.quadraticCurveTo(x0 + 2.7 * divx, y0 + 4.8 * divy, x0 + 2.95 * divx, y0 + 4.9 * divy);
+                cx.lineTo(x0 + 3.02 * divx, y0 + 4.94 * divy);
+                cx.stroke();
+                cx.lineTo(x0 + 3.5 * divx, y0 + 4.85 * divy);
+                cx.lineTo(x0 + 3.078 * divx, y0 + 3.7 * divy);
+                cx.fill();
+                cx.closePath();
+
+                cx.lineWidth /= 3;
+
+                cx.beginPath();
+                cx.moveTo(x0 + 2.91 * divx, y0 + 4.77 * divy);
+                cx.quadraticCurveTo(x0 + 2.95 * divx, y0 + 4.87 * divy, x0 + 3.01 * divx, y0 + 4.86 * divy);
+                cx.stroke();
+                cx.closePath();
+
+                cx.fillStyle = 'black';
+                cx.beginPath();
+                cx.moveTo(x0 + 3.08 * divx, y0 + 4.8 * divy);
+                cx.quadraticCurveTo(x0 + 3.2 * divx, y0 + 4.67 * divy, x0 + 3.29 * divx, y0 + 4.8 * divy);
+                cx.quadraticCurveTo(x0 + 3.25 * divx, y0 + 4.85 * divy, x0 + 3.17 * divx, y0 + 4.77 * divy);
+                cx.quadraticCurveTo(x0 + 3.11 * divx, y0 + 4.74 * divy, x0 + 3.08 * divx, y0 + 4.8 * divy);
+                cx.fill();
+                cx.stroke();
+                cx.closePath();
+
+                
+
+                cx.beginPath();
+                cx.moveTo(x0 + 3.32 * divx, y0 + 4.92 * divy);
+                cx.quadraticCurveTo(x0 + 3.55 * divx, y0 + 4.8 * divy, x0 + 3.35 * divx, y0 + 4.47 * divy);
+                cx.stroke();
+                cx.closePath();
+
+                cx.lineWidth *= 3 / 2;
+            }
+
+            function drawMouth() {
+                cx.beginPath();
+                cx.moveTo(x0 + 2.95 * divx, y0 + 5.75 * divy);
+                cx.quadraticCurveTo(x0 + 3.2 * divx, y0 + 5.67 * divy, x0 + 3.16 * divx, y0 + 5.7 * divy);
+                cx.quadraticCurveTo(x0 + 3.3 * divx, y0 + 5.66 * divy, x0 + 3.45 * divx, y0 + 5.68 * divy);
+                cx.quadraticCurveTo(x0 + 3.5 * divx, y0 + 5.7 * divy, x0 + 3.58 * divx, y0 + 5.65 * divy);
+                cx.stroke();
+                cx.closePath();
+            }
+
+            //  drawGlasses();
+
+            // called in correct order
+            function drawMe() {
+                drawArms();
+                drawShirt();
+                drawNeck();
+                drawCollar();
+                drawExtraSpace();
+                drawFaceOutline();
+                drawHairOutline();
+                drawEar();
+                drawButtons();
+                drawHeadPhones();
+                drawGlasses();
+                drawEyes();
+                drawNose();
+                drawMouth();
+            }
+
+            drawMe();
+
+            
+
+
+            
+        
